@@ -28,11 +28,10 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public  User findUser(String model, int series) {
-      Query jpqlQuery = sessionFactory.getCurrentSession().createQuery("SELECT u FROM Car u WHERE u.model=:model and u.series = :series");
+      Query jpqlQuery = sessionFactory.getCurrentSession().createQuery(" from User as u where u.car.model=:model and u.car.series = :series");
       jpqlQuery.setParameter("model", model);
       jpqlQuery.setParameter("series", series);
-      Car car1 =(Car) jpqlQuery.getSingleResult();
-      return (User) sessionFactory.getCurrentSession().createQuery("from User where car = " + car1.getId() ).getSingleResult();
+      return (User) jpqlQuery.getSingleResult();
    }
 
    @Override
